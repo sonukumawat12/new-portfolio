@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send, MapPin, Phone, Mail, Github, Linkedin, Twitter } from 'lucide-react';
+import { useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Send, MapPin, Phone, Mail, Github, Linkedin, Twitter, MessageSquare, Zap } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { useScrollAnimation, fadeInUp, staggerContainer } from '../hooks/useScrollAnimation';
 
-const SocialIcon = ({ name, icon }: { name: string; icon: string }) => {
+const SocialIcon = ({ icon }: { name: string; icon: string }) => {
   const iconMap: { [key: string]: any } = {
     Github,
     Linkedin,
@@ -30,6 +30,7 @@ const SocialIcon = ({ name, icon }: { name: string; icon: string }) => {
 const Contact = () => {
   const { personal } = portfolioData;
   const { ref, controls } = useScrollAnimation();
+  const { scrollYProgress } = useScroll();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -37,9 +38,11 @@ const Contact = () => {
     message: '',
   });
 
+  const y = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
     console.log('Form submitted:', formData);
   };
 
@@ -51,10 +54,55 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-gray-800 to-gray-900 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 to-blue-900/10"></div>
+    <section id="contact" className="py-20 relative overflow-hidden">
+      {/* Enhanced background layers */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-rose-950/20 to-gray-950"></div>
+      <motion.div 
+        style={{ y: backgroundY }}
+        className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(236,72,153,0.1),transparent_50%)]"
+      ></motion.div>
+      <motion.div 
+        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -80]) }}
+        className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.1),transparent_50%)]"
+      ></motion.div>
       
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Floating message icons */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          animate={{ 
+            rotate: [0, 360],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{ 
+            duration: 20, 
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute top-20 right-20 text-rose-500/20 text-4xl"
+        >
+          💬
+        </motion.div>
+        <motion.div
+          animate={{ 
+            rotate: [360, 0],
+            scale: [1, 0.8, 1]
+          }}
+          transition={{ 
+            duration: 15, 
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute bottom-20 left-20 text-blue-500/20 text-5xl"
+        >
+          📧
+        </motion.div>
+      </div>
+      
+      <motion.div 
+        style={{ y }}
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        {/* Enhanced Header */}
         <motion.div
           ref={ref}
           variants={staggerContainer}
@@ -62,33 +110,43 @@ const Contact = () => {
           animate={controls}
           className="text-center mb-16"
         >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-rose-500/10 to-blue-500/10 border border-rose-400/20 rounded-full mb-8"
+          >
+            <MessageSquare size={20} className="text-rose-400" />
+            <span className="text-rose-400 font-medium tracking-wider">LET'S CONNECT</span>
+          </motion.div>
+          
           <motion.h2
             variants={fadeInUp}
-            className="text-4xl lg:text-5xl font-bold text-white mb-6"
+            className="text-3xl lg:text-5xl font-bold text-white mb-6"
           >
-            Get In <span className="bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">Touch</span>
+            Get In{' '}
+            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent relative">
+              Touch
+              <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-full opacity-30"></div>
+            </span>
           </motion.h2>
           
           <motion.p
             variants={fadeInUp}
-            className="text-gray-400 text-lg max-w-2xl mx-auto"
+            className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed"
           >
-            Ready to start your next project? Let's discuss how we can work together
+            Ready to bring your vision to life? Let's create something amazing together
           </motion.p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <motion.div
-            variants={fadeInUp}
-            initial="hidden"
-            animate={controls}
-          >
+          <div>
             <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-white/10 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">Send Message</h3>
+              <h3 className="text-xl font-bold text-white">Send Message</h3>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <input
                       type="text"
@@ -133,30 +191,23 @@ const Contact = () => {
                   required
                 ></textarea>
                 
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white font-semibold flex items-center justify-center gap-2 hover:from-blue-500 hover:to-purple-500 transition-all duration-300"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg text-white font-semibold flex items-center justify-center gap-2 hover:from-green-400 hover:to-emerald-400 hover:shadow-xl hover:shadow-green-400/30 transition-all duration-300 shadow-lg shadow-green-500/20"
                 >
                   <Send size={20} />
                   Send Message
-                </motion.button>
+                </button>
               </form>
             </div>
-          </motion.div>
+          </div>
 
           {/* Contact Info */}
-          <motion.div
-            variants={fadeInUp}
-            initial="hidden"
-            animate={controls}
-            className="space-y-8"
-          >
+          <div className="space-y-8">
             <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-white/10 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
+              <h3 className="text-xl font-bold text-white mb-4">Contact Information</h3>
               
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg">
                     <Mail size={20} className="text-white" />
@@ -198,16 +249,35 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Map Placeholder */}
-            {/* <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-white/10 rounded-2xl p-8 h-64 flex items-center justify-center">
-              <div className="text-center">
-                <MapPin size={48} className="text-blue-400 mx-auto mb-4" />
-                <p className="text-gray-400">Interactive map would be embedded here</p>
+            {/* Enhanced CTA Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="bg-gradient-to-br from-blue-600/10 to-purple-600/10 backdrop-blur-lg border border-blue-400/20 rounded-2xl p-8 text-center"
+            >
+              <div className="flex justify-center mb-4">
+                <div className="p-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full">
+                  <Zap size={32} className="text-white" />
+                </div>
               </div>
-            </div> */}
-          </motion.div>
+              <h4 className="text-2xl font-bold text-white mb-3">Quick Response</h4>
+              <p className="text-gray-400 mb-6">
+                I typically respond within 24 hours. Let's discuss your project!
+              </p>
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href={`mailto:${personal.email}`}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg text-white font-semibold hover:from-green-400 hover:to-emerald-400 hover:shadow-xl hover:shadow-green-400/30 transition-all duration-300 shadow-lg shadow-green-500/20"
+              >
+                <Mail size={18} />
+                Email Directly
+              </motion.a>
+            </motion.div>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

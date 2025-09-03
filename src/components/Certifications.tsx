@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
-import { useScrollAnimation, fadeInUp, gridStagger, cardHover, iconHover } from '../hooks/useScrollAnimation';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const Certifications = () => {
   const { certifications } = portfolioData;
