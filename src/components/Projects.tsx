@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ExternalLink, Github, FolderOpen, Zap } from 'lucide-react';
+import { ExternalLink, Github, FolderOpen } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
-import { useScrollAnimation, fadeInUp, staggerContainer } from '../hooks/useScrollAnimation';
 import ProjectModal from './ProjectModal';
 
 interface Project {
@@ -50,16 +48,15 @@ const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => vo
               >
                 <ExternalLink size={20} />
               </button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-all duration-200"
+              <button
+                className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   window.open(project.githubUrl, '_blank');
                 }}
               >
                 <Github size={20} />
-              </motion.button>
+              </button>
             </div>
           </div>
         </div>
@@ -93,94 +90,53 @@ const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => vo
 
 const Projects = () => {
   const { projects } = portfolioData;
-  const { ref, controls } = useScrollAnimation();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const { scrollYProgress } = useScroll();
-  
-  const y = useTransform(scrollYProgress, [0, 1], [0, -30]);
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
   return (
     <>
       <section id="projects" className="py-20 relative overflow-hidden scroll-snap-align-start">
         {/* Enhanced background layers */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-indigo-950/20 to-gray-950"></div>
-        <motion.div 
-          style={{ y: backgroundY }}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_40%_40%,rgba(99,102,241,0.1),transparent_50%)]"
-        ></motion.div>
-        <motion.div 
-          style={{ y: useTransform(scrollYProgress, [0, 1], [0, -40]) }}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_60%_60%,rgba(168,85,247,0.1),transparent_50%)]"
-        ></motion.div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_40%,rgba(99,102,241,0.1),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_60%,rgba(168,85,247,0.1),transparent_50%)]"></div>
         
         {/* Animated mesh gradient */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
         
-        <motion.div 
-          style={{ y }}
-          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        >
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Enhanced Header */}
-          <motion.div
-            ref={ref}
-            variants={staggerContainer}
-            initial="hidden"
-            animate={controls}
-            className="text-center mb-16"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-400/20 rounded-full mb-8"
-            >
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-400/20 rounded-full mb-8">
               <FolderOpen size={20} className="text-indigo-400" />
               <span className="text-indigo-400 font-medium tracking-wider">MY WORK</span>
-            </motion.div>
+            </div>
             
-            <motion.h2
-              variants={fadeInUp}
-              className="text-3xl lg:text-5xl font-bold text-white mb-6"
-            >
+            <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
               My{' '}
               <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent relative">
                 Projects
                 <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-full opacity-30"></div>
               </span>
-            </motion.h2>
+            </h2>
             
-            <motion.p
-              variants={fadeInUp}
-              className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed"
-            >
+            <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
               Discover my latest creations where innovation meets functionality
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           {/* Enhanced Projects Grid */}
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid md:grid-cols-2 lg:grid-cols-2 gap-6"
-          >
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={fadeInUp}
-                transition={{ delay: index * 0.1 }}
-              >
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+            {projects.map((project) => (
+              <div key={project.id}>
                 <ProjectCard
                   project={project}
                   onClick={() => setSelectedProject(project)}
                 />
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
  
-        </motion.div>
+        </div>
       </section>
 
       <ProjectModal
