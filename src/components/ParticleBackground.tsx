@@ -1,24 +1,28 @@
+import { useMemo } from 'react';
 
 const ParticleBackground = () => {
-  const particles = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    delay: Math.random() * 5,
-    duration: 3 + Math.random() * 4,
-  }));
+  const particles = useMemo(() => 
+    Array.from({ length: 30 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      delay: Math.random() * 3,
+      duration: 2 + Math.random() * 2,
+    })), []
+  );
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform">
       {particles.map((particle) => (
         <div
           key={particle.id}
-          className="absolute w-1 h-1 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full opacity-60 animate-pulse"
+          className="absolute w-0.5 h-0.5 bg-gradient-to-r from-blue-400/40 to-purple-600/40 rounded-full animate-pulse gpu-accelerated"
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,
             animationDelay: `${particle.delay}s`,
             animationDuration: `${particle.duration}s`,
+            willChange: 'opacity',
           }}
         />
       ))}

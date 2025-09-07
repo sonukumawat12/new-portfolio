@@ -10,14 +10,14 @@ interface Skill {
 
 const SkillCard = ({ skill }: { skill: Skill }) => {
   return (
-    <div className="group bg-gradient-to-r from-slate-800/50 to-slate-700/30 border border-slate-600/30 rounded-xl p-4 hover:from-slate-700/60 hover:to-slate-600/40 hover:border-slate-500/50 transition-all duration-500 hover:scale-105 hover:shadow-lg">
+    <div className="group bg-gradient-to-r from-slate-800/50 to-slate-700/30 border border-slate-600/30 rounded-xl p-4 hover:from-slate-700/60 hover:to-slate-600/40 hover:border-slate-500/50 transition-all duration-300 hover:scale-102 hover:shadow-lg will-change-transform">
       <div className="flex flex-col items-center text-center space-y-3">
-        <div className="text-3xl group-hover:scale-110 transition-transform duration-300">{skill.icon}</div>
+        <div className="text-3xl group-hover:scale-105 transition-transform duration-200 will-change-transform">{skill.icon}</div>
         <h4 className="text-white text-sm font-semibold tracking-wide">{skill.name}</h4>
         <div className="w-full bg-slate-600/40 rounded-full h-1 overflow-hidden">
           <div
             style={{ width: `${skill.level}%` }}
-            className={`h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-700 ease-out`}
+            className={`h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-500 ease-out will-change-auto`}
           ></div>
         </div>
       </div>
@@ -35,7 +35,7 @@ const CategorySection = ({ title, skills, icon: Icon, color }: {
     <div className="space-y-6">
       {/* Enhanced Category Header */}
       <div className="flex items-center gap-4 mb-6">
-        <div className={`p-3 rounded-2xl bg-gradient-to-r ${color} shadow-lg`}>
+        <div className={`p-3 rounded-2xl bg-gradient-to-r ${color} shadow-lg will-change-transform`}>
           <Icon size={24} className="text-white" />
         </div>
         <div>

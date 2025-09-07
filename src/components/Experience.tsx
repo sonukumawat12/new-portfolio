@@ -126,7 +126,7 @@ const Experience = () => {
             <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
           </div>
           
-          <h2 className="text-5xl lg:text-7xl font-black text-white mb-8 leading-tight">
+          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
             My Career{' '}
             <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent relative">
               Timeline

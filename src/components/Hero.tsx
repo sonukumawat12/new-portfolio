@@ -1,4 +1,4 @@
-import { ArrowDown, Download, MessageCircle } from 'lucide-react';
+import { ArrowDown, MessageCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import ParticleBackground from './ParticleBackground';
 
@@ -37,10 +37,10 @@ const Hero = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center py-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
           {/* Professional Left Content */}
-          <div className="text-white space-y-8 text-center lg:text-left animate-fade-in-up">
+          <div className="text-white space-y-8 text-center lg:text-left animate-fade-in-up" data-scroll data-scroll-speed="1">
             {/* Status Badge */}
             {personal.availableForWork && (
-              <div className="flex justify-center lg:justify-start mb-6">
+              <div className="flex justify-center lg:justify-start mb-6 mt-16 sm:mt-20 lg:mt-0">
                 <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-gradient-to-r from-emerald-500/15 to-teal-500/15 border border-emerald-400/25 rounded-full backdrop-blur-sm">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
                   <span className="text-emerald-400 font-medium text-sm tracking-wide">AVAILABLE FOR WORK</span>
@@ -70,11 +70,6 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-              <button className="gradient-button px-8 py-4 rounded-xl font-semibold flex items-center justify-center gap-3 text-white">
-                <Download size={20} />
-                <span>Download CV</span>
-              </button>
-              
               <button
                 onClick={handleWhatsAppClick}
                 className="gradient-button-teal px-8 py-4 rounded-xl font-semibold flex items-center justify-center gap-3 text-white"
@@ -86,7 +81,7 @@ const Hero = () => {
           </div>
 
           {/* Clean Profile Card */}
-          <div className="flex justify-center lg:justify-end mt-12 lg:mt-0 animate-fade-in-right">
+          <div className="flex justify-center lg:justify-end mt-12 lg:mt-0 animate-fade-in-right" data-scroll data-scroll-speed="2">
             <div className="relative hover-lift">
               <div className="elegant-card p-8 max-w-sm">
                 <div className="relative">
@@ -94,10 +89,12 @@ const Hero = () => {
                     src={personal.image}
                     alt={personal.name}
                     className="w-80 h-80 object-cover rounded-2xl shadow-xl"
+                    data-scroll
+                    data-scroll-speed="0.5"
+                    loading="lazy"
                   />
                 </div>
-                
-                <div className="mt-6 text-center">
+                <div className="text-center">
                   <h3 className="text-2xl font-bold text-white mb-2">{personal.name}</h3>
                   <p className="text-blue-400 font-medium">{personal.title}</p>
                 </div>
@@ -109,7 +106,7 @@ const Hero = () => {
 
       {/* Minimal Scroll Indicator */}
       <div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer hidden sm:block"
         onClick={scrollToAbout}
       >
         <div className="flex flex-col items-center gap-3 group">

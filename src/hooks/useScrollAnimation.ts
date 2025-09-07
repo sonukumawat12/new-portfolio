@@ -7,7 +7,7 @@ export const useScrollAnimation = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
-    rootMargin: '-50px 0px',
+    rootMargin: '-30px 0px',
   });
 
   useEffect(() => {
@@ -23,17 +23,18 @@ export const useScrollAnimation = () => {
 export const fadeInUp = {
   hidden: { 
     opacity: 0, 
-    y: 40,
-    scale: 0.95,
+    y: 20,
+    scale: 0.98,
   },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.8,
-      opacity: { duration: 0.6 },
-      scale: { duration: 0.7 },
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1],
+      opacity: { duration: 0.4 },
+      scale: { duration: 0.4 },
     },
   },
 };
@@ -43,27 +44,26 @@ export const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-      duration: 0.8,
+      staggerChildren: 0.08,
+      delayChildren: 0.05,
+      duration: 0.4,
     },
   },
 };
 
 export const scaleIn = {
   hidden: { 
-    scale: 0.8, 
+    scale: 0.9, 
     opacity: 0,
-    rotateX: -15,
   },
   visible: {
     scale: 1,
     opacity: 1,
-    rotateX: 0,
     transition: {
-      duration: 0.8,
-      scale: { duration: 0.7 },
-      opacity: { duration: 0.6 },
+      duration: 0.4,
+      ease: [0.25, 0.1, 0.25, 1],
+      scale: { duration: 0.4 },
+      opacity: { duration: 0.3 },
     },
   },
 };
@@ -71,15 +71,14 @@ export const scaleIn = {
 export const slideInLeft = {
   hidden: { 
     opacity: 0, 
-    x: -60,
-    scale: 0.95,
+    x: -30,
   },
   visible: {
     opacity: 1,
     x: 0,
-    scale: 1,
     transition: {
-      duration: 0.8,
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1],
     },
   },
 };
@@ -87,41 +86,42 @@ export const slideInLeft = {
 export const slideInRight = {
   hidden: { 
     opacity: 0, 
-    x: 60,
-    scale: 0.95,
+    x: 30,
   },
   visible: {
     opacity: 1,
     x: 0,
-    scale: 1,
     transition: {
-      duration: 0.8,
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1],
     },
   },
 };
 
 export const cardHover = {
   hover: {
-    scale: 1.03,
-    y: -8,
+    scale: 1.02,
+    y: -4,
     transition: {
-      duration: 0.4,
+      duration: 0.2,
+      ease: "easeOut",
     },
   },
   tap: {
     scale: 0.98,
     transition: {
-      duration: 0.2,
+      duration: 0.1,
     },
   },
 };
 
 export const iconHover = {
   hover: {
-    scale: 1.15,
-    rotate: 5,
+    scale: 1.1,
+    rotate: 3,
     transition: {
-      duration: 0.3,
+      duration: 0.2,
+      ease: "easeOut",
     },
   },
 };
@@ -141,21 +141,22 @@ export const gridStagger = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.1,
-      duration: 0.8,
+      staggerChildren: 0.06,
+      delayChildren: 0.05,
+      duration: 0.4,
     },
   },
 };
 
 // Smooth counter animation
 export const counterAnimation = {
-  hidden: { opacity: 0, scale: 0.8 },
+  hidden: { opacity: 0, scale: 0.95 },
   visible: {
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.8,
+      duration: 0.4,
+      ease: [0.25, 0.1, 0.25, 1],
     },
   },
 };

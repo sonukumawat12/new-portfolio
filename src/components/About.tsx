@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { User, Heart, Code, Award } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
-const CounterAnimation = ({ end, suffix = '', duration = 2000 }: { end: number; suffix?: string; duration?: number }) => {
+const CounterAnimation = ({ end, suffix = '', duration = 1   }: { end: number; suffix?: string; duration?: number }) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const counterRef = useRef<HTMLDivElement>(null);
@@ -14,7 +14,7 @@ const CounterAnimation = ({ end, suffix = '', duration = 2000 }: { end: number; 
           setIsVisible(true);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     if (counterRef.current) {
@@ -26,26 +26,28 @@ const CounterAnimation = ({ end, suffix = '', duration = 2000 }: { end: number; 
 
   useEffect(() => {
     if (isVisible) {
-      const timer = setInterval(() => {
-        setCount(prev => {
-          const increment = Math.ceil(end / (duration / 50));
-          const nextValue = prev + increment;
-          
-          if (nextValue >= end) {
-            clearInterval(timer);
-            return end;
-          }
-          
-          return nextValue;
-        });
-      }, 50);
-
-      return () => clearInterval(timer);
+      let startTime: number;
+      const animate = (currentTime: number) => {
+        if (!startTime) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        
+        // Easing function for smooth animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        setCount(Math.floor(easeOutQuart * end));
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          setCount(end);
+        }
+      };
+      
+      requestAnimationFrame(animate);
     }
   }, [isVisible, end, duration]);
 
   return (
-    <div ref={counterRef} className="text-center">
+    <div ref={counterRef} className="text-center will-change-transform">
       <div className="text-4xl font-bold text-white mb-2">
         {count}{suffix}
       </div>
@@ -123,7 +125,7 @@ const About = () => {
               {stats.map((stat, index) => (
                 <div key={index} className="elegant-card p-6 hover-lift text-center group">
                   {/* Stat icon */}
-                  <div className="w-14 h-14 gradient-button rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-14 h-14 gradient-button rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform duration-200 will-change-transform">
                     {index === 0 && <Code size={22} className="text-white" />}
                     {index === 1 && <Award size={22} className="text-white" />}
                     {index === 2 && <User size={22} className="text-white" />}

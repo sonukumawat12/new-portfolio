@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, ExternalLink, Github, ChevronLeft, ChevronRight, Grid3X3 } from 'lucide-react';
 
 interface GalleryItem {
@@ -28,6 +28,12 @@ interface ProjectModalProps {
 const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isGalleryMode, setIsGalleryMode] = useState(false);
+
+  // Reset image index and gallery mode when project changes or closes
+  useEffect(() => {
+    setCurrentImageIndex(0);
+    setIsGalleryMode(false);
+  }, [project?.id]);
 
   if (!project) return null;
 
@@ -197,26 +203,59 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                     </div>
                   </div>
 
+                  {/* Company Project Notice */}
+                  {project.githubUrl === "#" && (
+                    <div className="mb-4 p-3 sm:p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-400/30 rounded-lg">
+                      <div className="flex items-start gap-2 sm:gap-3">
+                        <div className="text-amber-400 mt-0.5">
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h5 className="text-amber-300 font-medium text-sm sm:text-base mb-1">Company Project</h5>
+                          <p className="text-amber-200/80 text-xs sm:text-sm leading-relaxed">
+                            This project was developed during my employment at a company. Due to confidentiality agreements and company policies, I don't have access to the source code or live system for demonstration purposes. The images and details shown are representative of the project's functionality.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white font-semibold hover:from-blue-500 hover:to-purple-500 hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base"
-                    >
-                      <ExternalLink size={14} className="sm:w-4 sm:h-4" />
-                      Live Demo
-                    </a>
+                    {project.liveUrl !== "#" ? (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white font-semibold hover:from-blue-500 hover:to-purple-500 hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base"
+                      >
+                        <ExternalLink size={14} className="sm:w-4 sm:h-4" />
+                        Live Demo
+                      </a>
+                    ) : (
+                      <div className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-gray-600/50 rounded-lg text-gray-400 text-sm sm:text-base cursor-not-allowed">
+                        <ExternalLink size={14} className="sm:w-4 sm:h-4" />
+                        Live Demo (Not Available)
+                      </div>
+                    )}
                     
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 border-2 border-gray-600 rounded-lg text-gray-300 hover:border-gray-500 hover:text-white hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base"
-                    >
-                      <Github size={14} className="sm:w-4 sm:h-4" />
-                      Source Code
-                    </a>
+                    {project.githubUrl !== "#" ? (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 border-2 border-gray-600 rounded-lg text-gray-300 hover:border-gray-500 hover:text-white hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base"
+                      >
+                        <Github size={14} className="sm:w-4 sm:h-4" />
+                        Source Code
+                      </a>
+                    ) : (
+                      <div className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 border-2 border-gray-600/50 rounded-lg text-gray-500 text-sm sm:text-base cursor-not-allowed">
+                        <Github size={14} className="sm:w-4 sm:h-4" />
+                        Source Code (Confidential)
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
