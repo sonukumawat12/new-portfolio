@@ -1,6 +1,7 @@
 import { ArrowDown, MessageCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import ParticleBackground from './ParticleBackground';
+import OptimizedImage from './OptimizedImage';
 
 const Hero = () => {
   const { personal } = portfolioData;
@@ -85,13 +86,14 @@ const Hero = () => {
             <div className="relative hover-lift">
               <div className="elegant-card p-8 max-w-sm">
                 <div className="relative">
-                  <img
+                  <OptimizedImage
                     src={personal.image}
                     alt={personal.name}
                     className="w-80 h-80 object-cover rounded-2xl shadow-xl"
-                    data-scroll
-                    data-scroll-speed="0.5"
-                    loading="lazy"
+                    width={320}
+                    height={320}
+                    priority={true}
+                    sizes="(max-width: 768px) 280px, 320px"
                   />
                 </div>
                 <div className="text-center">

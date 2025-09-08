@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ExternalLink, Github, FolderOpen } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import ProjectModal from './ProjectModal';
+import OptimizedImage from './OptimizedImage';
 
 interface Project {
   id: number;
@@ -27,11 +28,13 @@ const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => vo
       onClick={onClick}
     >
       <div className="relative overflow-hidden">
-        <img
+        <OptimizedImage
           src={project.image}
           alt={project.title}
           className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 will-change-transform"
-          loading="lazy"
+          width={600}
+          height={256}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
         

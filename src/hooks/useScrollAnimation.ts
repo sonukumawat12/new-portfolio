@@ -1,22 +1,66 @@
 import { useInView } from 'react-intersection-observer';
-import { useAnimation } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
-export const useScrollAnimation = () => {
-  const controls = useAnimation();
+// Optimized scroll animation hook using CSS classes instead of Framer Motion
+export const useScrollAnimation = (animationClass = 'animate-fade-in-up') => {
+  const elementRef = useRef<HTMLElement | null>(null);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
     rootMargin: '-30px 0px',
   });
 
-  useEffect(() => {
-    if (inView) {
-      controls.start('visible');
-    }
-  }, [controls, inView]);
+  const setRefs = useCallback((node: HTMLElement | null) => {
+    elementRef.current = node;
+    ref(node);
+  }, [ref]);
 
-  return { ref, controls };
+  useEffect(() => {
+    if (inView && elementRef.current) {
+      const element = elementRef.current;
+      // Add animation class when in view
+      element.classList.add(animationClass);
+      element.classList.add('animating');
+      
+      // Remove will-change after animation completes
+      const handleAnimationEnd = () => {
+        element.classList.remove('animating');
+      };
+      
+      element.addEventListener('animationend', handleAnimationEnd, { once: true });
+    }
+  }, [inView, animationClass]);
+
+  return { ref: setRefs, inView };
+};
+
+// Throttled scroll hook for better performance using requestAnimationFrame
+export const useThrottledScroll = (callback: (scrollY: number) => void, delay = 16) => {
+  const lastRun = useRef(Date.now());
+  const rafId = useRef<number>();
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
+      
+      rafId.current = requestAnimationFrame(() => {
+        if (Date.now() - lastRun.current >= delay) {
+          callback(window.scrollY);
+          lastRun.current = Date.now();
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
+    };
+  }, [callback, delay]);
 };
 
 // Performance-optimized animations using GPU-accelerated transforms

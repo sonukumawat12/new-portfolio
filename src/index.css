@@ -63,9 +63,16 @@ html {
   scroll-padding-top: 80px;
 }
 
-/* Enhanced smooth scrolling with momentum */
+/* Enhanced smooth scrolling with momentum and performance */
 * {
   scroll-behavior: smooth;
+}
+
+/* Optimized scrolling for better performance */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Performance optimizations */
@@ -81,11 +88,30 @@ html {
   will-change: auto;
 }
 
+/* Optimized will-change that auto-removes */
+.will-change-smart {
+  will-change: transform, opacity;
+  animation-fill-mode: both;
+}
+
+.will-change-smart:not(:hover):not(:focus):not(.animating) {
+  will-change: auto;
+}
+
 /* GPU acceleration helpers */
 .gpu-accelerated {
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+/* Optimized transforms for better performance */
+.transform-gpu {
+  transform: translate3d(0, 0, 0);
+}
+
+.transform-gpu-hover:hover {
+  transform: translate3d(0, -2px, 0);
 }
 
 /* Smooth scroll snap for sections */
@@ -214,7 +240,7 @@ html {
   box-shadow: 0 6px 20px rgba(20, 184, 166, 0.25);
 }
 
-/* Elegant Animations */
+/* Optimized Elegant Animations with better easing */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -290,6 +316,18 @@ html {
   }
 }
 
+/* Performance-optimized stagger animation */
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   will-change: transform, opacity;
@@ -326,6 +364,35 @@ html {
   will-change: opacity;
 }
 
+.animate-stagger {
+  animation: staggerFadeIn 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  animation-fill-mode: both;
+  will-change: transform, opacity;
+}
+
+/* Auto-remove will-change after animation */
+.animate-fade-in-up,
+.animate-fade-in-left,
+.animate-fade-in-right,
+.animate-scale-in,
+.animate-slide-down,
+.animate-slide-right,
+.animate-fade-in,
+.animate-stagger {
+  animation-fill-mode: both;
+}
+
+.animate-fade-in-up:not(.animating),
+.animate-fade-in-left:not(.animating),
+.animate-fade-in-right:not(.animating),
+.animate-scale-in:not(.animating),
+.animate-slide-down:not(.animating),
+.animate-slide-right:not(.animating),
+.animate-fade-in:not(.animating),
+.animate-stagger:not(.animating) {
+  will-change: auto;
+}
+
 /* Subtle hover effects */
 .hover-lift {
   transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.2s ease;
@@ -335,4 +402,43 @@ html {
 .hover-lift:hover {
   transform: translate3d(0, -2px, 0);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Image loading optimizations */
+.image-container {
+  contain: layout style paint;
+}
+
+.image-loading {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Performance optimizations for animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize font loading */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 }

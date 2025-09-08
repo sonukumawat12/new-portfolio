@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, ExternalLink, Github, ChevronLeft, ChevronRight, Grid3X3 } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 interface GalleryItem {
   id: number;
@@ -93,10 +94,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 <div className="h-full relative">
                   {/* Main Image */}
                   <div className="h-full relative">
-                    <img
+                    <OptimizedImage
                       src={currentImage.image}
                       alt={currentImage.title}
                       className="w-full h-full object-contain"
+                      width={800}
+                      height={600}
+                      sizes="(max-width: 768px) 100vw, 800px"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                     
@@ -139,10 +143,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 </div>
               ) : (
                 <div className="h-full relative">
-                  <img
+                  <OptimizedImage
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-contain"
+                    width={800}
+                    height={600}
+                    sizes="(max-width: 768px) 100vw, 800px"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                 </div>
@@ -164,10 +171,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                             : 'border-white/30 hover:border-white/60'
                         }`}
                       >
-                        <img
+                        <OptimizedImage
                           src={item.image}
                           alt={item.title}
                           className="w-full h-full object-cover"
+                          width={64}
+                          height={48}
+                          sizes="64px"
                         />
                       </button>
                     ))}
@@ -277,10 +287,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                         setCurrentImageIndex(index);
                       }}
                     >
-                      <img
+                      <OptimizedImage
                         src={item.image}
                         alt={item.title}
                         className="w-full h-24 object-cover"
+                        width={320}
+                        height={96}
+                        sizes="320px"
                       />
                       <div className="p-3">
                         <h5 className="text-white font-medium text-sm mb-1">{item.title}</h5>

@@ -1,17 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { Menu, X, Sparkles } from 'lucide-react';
+import { useThrottledScroll } from '../hooks/useScrollAnimation';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  const handleScroll = useCallback((scrollY: number) => {
+    setScrolled(scrollY > 50);
   }, []);
+
+  useThrottledScroll(handleScroll);
 
   const navItems = [
     { name: 'Home', href: '#home' },
