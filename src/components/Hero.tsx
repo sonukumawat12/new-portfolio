@@ -1,21 +1,22 @@
 import { ArrowDown, MessageCircle } from 'lucide-react';
+import { memo, useCallback } from 'react';
 import { portfolioData } from '../data/portfolioData';
 import ParticleBackground from './ParticleBackground';
 import OptimizedImage from './OptimizedImage';
 
-const Hero = () => {
+const Hero = memo(() => {
   const { personal } = portfolioData;
 
-  const handleWhatsAppClick = () => {
+  const handleWhatsAppClick = useCallback(() => {
     const phoneNumber = '+91 63754 26292';
     const message = 'Hi! I would like to discuss a project with you.';
     const whatsappUrl = `https://wa.me/${phoneNumber.replace(/\s/g, '')}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
-  };
+  }, []);
 
-  const scrollToAbout = () => {
+  const scrollToAbout = useCallback(() => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   return (
     <section id="home" className="min-h-screen relative overflow-hidden">
@@ -120,6 +121,8 @@ const Hero = () => {
       </div>
     </section>
   );
-};
+});
+
+Hero.displayName = 'Hero';
 
 export default Hero;

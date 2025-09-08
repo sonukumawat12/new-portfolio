@@ -306,7 +306,7 @@ export const portfolioData = {
       title: "Laravel Developer",
       company: "WebNStack IT Solution Pvt Ltd",
       duration: "January 2022 - July 2024",
-      description: "Engineered comprehensive healthcare management systems and CRM solutions featuring patient database management, intelligent appointment scheduling, and multi-level role-based access control. Successfully deployed HIPAA-compliant solutions serving 200+ patients daily and developed multiple enterprise-level applications.",
+      description: "Engineered comprehensive healthcare management systems, HR-Payroll solutions, and CRM applications featuring patient database management, employee payroll processing, intelligent appointment scheduling, and multi-level role-based access control. Successfully deployed HIPAA-compliant solutions serving 200+ patients daily and streamlined HR operations for multiple organizations.",
       icon: "🏥",
     },
     {
@@ -314,7 +314,7 @@ export const portfolioData = {
       title: "Laravel Developer",
       company: "Aladdin Digital Solutions",
       duration: "August 2019 - December 2021",
-      description: "Developed and maintained multiple web applications using Laravel framework. Gained extensive experience with live production projects, contributed to critical web development initiatives, mastered industry-standard workflows, and established strong foundation in modern development practices.",
+      description: "Developed and maintained multiple web applications using Laravel framework including ecommerce platforms and Zupito CRM - an online cab booking system. Gained extensive experience with live production projects, contributed to critical web development initiatives, mastered industry-standard workflows, and established strong foundation in modern development practices.",
       icon: "🚀",
     },
   ],

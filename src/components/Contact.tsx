@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { Send, MapPin, Phone, Mail, Github, Linkedin, Twitter, MessageSquare, Zap, CheckCircle, AlertCircle } from 'lucide-react';
+import { useState, memo, useCallback } from 'react';
+import { Send, MapPin, Phone, Mail, Github, Linkedin, Twitter, MessageSquare, CheckCircle, AlertCircle, Zap } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
+import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import axios from 'axios';
 
-const SocialIcon = ({ icon }: { name: string; icon: string }) => {
+const SocialIcon = memo(({ name, icon }: { name: string; icon: string }) => {
   const iconMap: { [key: string]: any } = {
     Github,
     Linkedin,
@@ -12,20 +13,26 @@ const SocialIcon = ({ icon }: { name: string; icon: string }) => {
   };
   
   const IconComponent = iconMap[icon];
+  const socialUrl = portfolioData.social.find(s => s.icon === icon)?.url;
   
   return (
     <a
-      href={portfolioData.social.find(s => s.icon === icon)?.url}
-      className="p-4 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl text-gray-400 hover:text-white hover:border-blue-400/50 hover:scale-110 hover:-translate-y-1 transition-all duration-300 group"
+      href={socialUrl}
+      className="p-3 sm:p-4 bg-gray-800/50 border border-gray-700/50 rounded-lg text-gray-400 hover:text-white hover:border-blue-400/50 transition-colors duration-200"
+      aria-label={`Visit ${name}`}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      <IconComponent size={24} className="relative z-10" />
+      <IconComponent size={20} className="sm:w-6 sm:h-6" />
     </a>
   );
-};
+});
 
-const Contact = () => {
+const Contact = memo(() => {
   const { personal } = portfolioData;
+  const { elementRef, isIntersecting } = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: '50px',
+  });
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -86,7 +93,7 @@ const Contact = () => {
     return isValid;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Mark all fields as touched to show validation errors
@@ -137,9 +144,9 @@ const Contact = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [formData]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
     setFormData(prev => ({
@@ -154,9 +161,9 @@ const Contact = () => {
         [name]: ''
       }));
     }
-  };
+  }, [errors]);
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
     setTouched(prev => ({
@@ -170,42 +177,35 @@ const Contact = () => {
       ...prev,
       [name]: error
     }));
-  };
+  }, []);
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden">
-      {/* Enhanced background layers */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-rose-950/20 to-gray-950"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(236,72,153,0.1),transparent_50%)]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+    <section 
+      ref={elementRef}
+      id="contact" 
+      className={`py-12 sm:py-16 lg:py-20 relative transition-all duration-700 ${
+        isIntersecting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
+      {/* Simplified background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 to-gray-900"></div>
       
-      {/* Floating message icons */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-20 text-rose-500/20 text-4xl animate-spin">
-          💬
-        </div>
-        <div className="absolute bottom-20 left-20 text-blue-500/20 text-5xl animate-pulse">
-          📧
-        </div>
-      </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Enhanced Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-rose-500/10 to-blue-500/10 border border-rose-400/20 rounded-full mb-8 animate-fade-in">
-            <MessageSquare size={20} className="text-rose-400" />
-            <span className="text-rose-400 font-medium tracking-wider">LET'S CONNECT</span>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Lightweight Header */}
+        <div className="text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-400/20 rounded-full mb-6 " > 
+            <MessageSquare size={16} className="text-blue-400" />
+            <span className="text-blue-400 font-medium text-sm tracking-wider">LET'S CONNECT</span>
           </div>
           
-          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6 animate-slide-up">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
             Get In{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent relative">
+            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
               Touch
-              <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-full opacity-30"></div>
             </span>
           </h2>
           
-          <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed animate-slide-up">
+          <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
             Ready to bring your vision to life? Let's create something amazing together
           </p>
         </div>
@@ -343,14 +343,14 @@ const Contact = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-8">
-            <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-white/10 rounded-2xl p-8">
-              <h3 className="text-xl font-bold text-white mb-4">Contact Information</h3>
+          <div className="space-y-6">
+            <div className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">Contact Information</h3>
               
               <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg">
-                    <Mail size={20} className="text-white" />
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-blue-500/20 rounded-lg">
+                    <Mail size={18} className="text-blue-400" />
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Email</p>
@@ -358,9 +358,9 @@ const Contact = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg">
-                    <Phone size={20} className="text-white" />
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-blue-500/20 rounded-lg">
+                    <Phone size={18} className="text-blue-400" />
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Phone</p>
@@ -368,9 +368,9 @@ const Contact = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg">
-                    <MapPin size={20} className="text-white" />
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-blue-500/20 rounded-lg">
+                    <MapPin size={18} className="text-blue-400" />
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Location</p>
@@ -379,9 +379,9 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="mt-8 pt-8 border-t border-gray-700">
-                <h4 className="text-white font-semibold mb-4">Follow Me</h4>
-                <div className="flex gap-4">
+              <div className="mt-6 pt-6 border-t border-gray-700">
+                <h4 className="text-white font-medium mb-3">Follow Me</h4>
+                <div className="flex gap-3">
                   {portfolioData.social.map((social) => (
                     <SocialIcon key={social.name} name={social.name} icon={social.icon} />
                   ))}
@@ -389,22 +389,22 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Enhanced CTA Section */}
-            <div className="bg-gradient-to-br from-blue-600/10 to-purple-600/10 backdrop-blur-lg border border-blue-400/20 rounded-2xl p-8 text-center animate-fade-in">
-              <div className="flex justify-center mb-4">
-                <div className="p-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full">
-                  <Zap size={32} className="text-white" />
+            {/* Quick Response CTA */}
+            <div className="bg-blue-500/10 border border-blue-400/20 rounded-xl p-6 text-center">
+              <div className="flex justify-center mb-3">
+                <div className="p-3 bg-blue-500/20 rounded-full">
+                  <Zap size={24} className="text-blue-400" />
                 </div>
               </div>
-              <h4 className="text-2xl font-bold text-white mb-3">Quick Response</h4>
-              <p className="text-gray-400 mb-6">
+              <h4 className="text-lg font-semibold text-white mb-2">Quick Response</h4>
+              <p className="text-gray-400 text-sm mb-4">
                 I typically respond within 24 hours. Let's discuss your project!
               </p>
               <a
                 href={`mailto:${personal.email}`}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg text-white font-semibold hover:from-green-400 hover:to-emerald-400 hover:shadow-xl hover:shadow-green-400/30 hover:scale-105 transition-all duration-300 shadow-lg shadow-green-500/20"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg text-white font-medium hover:from-green-400 hover:to-emerald-400 transition-colors duration-200"
               >
-                <Mail size={18} />
+                <Mail size={16} />
                 Email Directly
               </a>
             </div>
@@ -413,6 +413,8 @@ const Contact = () => {
       </div>
     </section>
   );
-};
+});
+
+Contact.displayName = 'Contact';
 
 export default Contact;

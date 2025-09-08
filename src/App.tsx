@@ -1,22 +1,18 @@
-import { useEffect } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { useEffect, lazy, Suspense } from 'react';
 import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Experience from './components/Experience';
-import Certifications from './components/Certifications';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import LoadingSpinner from './components/LoadingSpinner';
+
+// Lazy load components for better performance
+const Hero = lazy(() => import('./components/Hero'));
+const About = lazy(() => import('./components/About'));
+const Skills = lazy(() => import('./components/Skills'));
+const Projects = lazy(() => import('./components/Projects'));
+const Experience = lazy(() => import('./components/Experience'));
+const Certifications = lazy(() => import('./components/Certifications'));
+const Contact = lazy(() => import('./components/Contact'));
+const Footer = lazy(() => import('./components/Footer'));
 
 function App() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
   useEffect(() => {
     // Enhanced smooth scrolling for anchor links
@@ -45,35 +41,37 @@ function App() {
       <Navigation />
       
       <main className="relative">
-        <section className="scroll-snap-section">
-          <Hero />
-        </section>
-        
-        <section className="scroll-snap-section">
-          <About />
-        </section>
-        
-        <section className="scroll-snap-section">
-          <Skills />
-        </section>
-        
-        <section className="scroll-snap-section">
-          <Projects />
-        </section>
-        
-        <section className="scroll-snap-section">
-          <Experience />
-        </section>
-        
-        <section className="scroll-snap-section">
-          <Certifications />
-        </section>
-        
-        <section className="scroll-snap-section">
-          <Contact />
-        </section>
-        
-        <Footer />
+        <Suspense fallback={<LoadingSpinner />}>
+          <section className="scroll-snap-section">
+            <Hero />
+          </section>
+          
+          <section className="scroll-snap-section">
+            <About />
+          </section>
+          
+          <section className="scroll-snap-section">
+            <Skills />
+          </section>
+          
+          <section className="scroll-snap-section">
+            <Projects />
+          </section>
+          
+          <section className="scroll-snap-section">
+            <Experience />
+          </section>
+          
+          <section className="scroll-snap-section">
+            <Certifications />
+          </section>
+          
+          <section className="scroll-snap-section">
+            <Contact />
+          </section>
+          
+          <Footer />
+        </Suspense>
       </main>
     </div>
   );

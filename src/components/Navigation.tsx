@@ -1,8 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, memo, useMemo } from 'react';
 import { Menu, X, Sparkles } from 'lucide-react';
 import { useThrottledScroll } from '../hooks/useScrollAnimation';
 
-const Navigation = () => {
+const Navigation = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -12,7 +12,7 @@ const Navigation = () => {
 
   useThrottledScroll(handleScroll);
 
-  const navItems = [
+  const navItems = useMemo(() => [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
@@ -20,7 +20,7 @@ const Navigation = () => {
     { name: 'Experience', href: '#experience' },
     { name: 'Certifications', href: '#certifications' },
     { name: 'Contact', href: '#contact' },
-  ];
+  ], []);
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 animate-slide-down ${
@@ -108,6 +108,8 @@ const Navigation = () => {
       </div>
     </nav>
   );
-};
+});
+
+Navigation.displayName = 'Navigation';
 
 export default Navigation;
