@@ -3,10 +3,10 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/portfolio2/',
+  base: '/sonu-webdev-portfolio/',
   plugins: [
     react({
-      // Optimize JSX runtime
+      // Optimize JSX runtime11111111111
       jsxRuntime: 'automatic',
     }),
   ],
