@@ -35,41 +35,20 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-gray-950 min-h-screen scroll-snap-container will-change-scroll">
+    <div className="bg-gray-950 min-h-screen">
 
       
       <Navigation />
       
       <main className="relative">
         <Suspense fallback={<LoadingSpinner />}>
-          <section className="scroll-snap-section">
-            <Hero />
-          </section>
-          
-          <section className="scroll-snap-section">
-            <About />
-          </section>
-          
-          <section className="scroll-snap-section">
-            <Skills />
-          </section>
-          
-          <section className="scroll-snap-section">
-            <Projects />
-          </section>
-          
-          <section className="scroll-snap-section">
-            <Experience />
-          </section>
-          
-          <section className="scroll-snap-section">
-            <Certifications />
-          </section>
-          
-          <section className="scroll-snap-section">
-            <Contact />
-          </section>
-          
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Experience />
+          <Certifications />
+          <Contact />
           <Footer />
         </Suspense>
       </main>

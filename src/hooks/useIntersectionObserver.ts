@@ -11,7 +11,7 @@ export const useIntersectionObserver = (
 ) => {
   const {
     threshold = 0.1,
-    rootMargin = '0px',
+    rootMargin = '50px',
     triggerOnce = true,
   } = options;
 
@@ -54,6 +54,32 @@ export const useIntersectionObserver = (
   }, [handleIntersection, threshold, rootMargin]);
 
   return { elementRef, isIntersecting };
+};
+
+// Lightweight scroll-based animation hook
+export const useScrollAnimation = () => {
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          element.classList.add('visible');
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  return { elementRef, isVisible };
 };
 
 export default useIntersectionObserver;

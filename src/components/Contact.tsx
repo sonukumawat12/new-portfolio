@@ -2,7 +2,6 @@ import { useState, memo, useCallback } from 'react';
 import { Send, MapPin, Phone, Mail, Github, Linkedin, Twitter, MessageSquare, CheckCircle, AlertCircle, Zap } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-import axios from 'axios';
 
 const SocialIcon = memo(({ name, icon }: { name: string; icon: string }) => {
   const iconMap: { [key: string]: any } = {
@@ -114,18 +113,16 @@ const Contact = memo(() => {
     setSubmitStatus('idle');
 
     try {
-      const response = await axios.post(
-        "https://getform.io/f/akkpegna",
-        formData,
-        { 
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      const response = await fetch("https://getform.io/f/akkpegna", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
 
-      if (response.status === 200) {
+      if (response.ok) {
         setSubmitStatus('success');
         setSubmitMessage('Thank you! Your message has been sent successfully.');
         setFormData({

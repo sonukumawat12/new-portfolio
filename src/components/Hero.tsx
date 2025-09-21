@@ -1,7 +1,6 @@
 import { ArrowDown, MessageCircle } from 'lucide-react';
 import { memo, useCallback } from 'react';
 import { portfolioData } from '../data/portfolioData';
-import ParticleBackground from './ParticleBackground';
 import OptimizedImage from './OptimizedImage';
 
 const Hero = memo(() => {
@@ -30,16 +29,11 @@ const Hero = memo(() => {
         <div className="absolute top-1/4 right-1/4 w-32 h-32 border border-blue-500/10 rounded-full"></div>
         <div className="absolute bottom-1/4 left-1/4 w-24 h-24 border border-teal-500/10 rounded-lg rotate-45"></div>
       </div>
-
-      <ParticleBackground />
-      
-      {/* Minimal grid pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px] opacity-40"></div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center py-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
           {/* Professional Left Content */}
-          <div className="text-white space-y-8 text-center lg:text-left animate-fade-in-up" data-scroll data-scroll-speed="1">
+          <div className="text-white space-y-8 text-center lg:text-left animate-fade-in-up">
             {/* Status Badge */}
             {personal.availableForWork && (
               <div className="flex justify-center lg:justify-start mb-6 mt-16 sm:mt-20 lg:mt-0">
@@ -83,7 +77,7 @@ const Hero = memo(() => {
           </div>
 
           {/* Clean Profile Card */}
-          <div className="flex justify-center lg:justify-end mt-12 lg:mt-0 animate-fade-in-right" data-scroll data-scroll-speed="2">
+          <div className="flex justify-center lg:justify-end mt-12 lg:mt-0 animate-fade-in-right">
             <div className="relative hover-lift">
               <div className="elegant-card p-8 max-w-sm">
                 <div className="relative">
@@ -107,14 +101,14 @@ const Hero = memo(() => {
         </div>
       </div>
 
-      {/* Minimal Scroll Indicator */}
+      {/* Scroll Indicator */}
       <div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer hidden sm:block"
         onClick={scrollToAbout}
       >
         <div className="flex flex-col items-center gap-3 group">
           <span className="text-slate-400 text-sm font-medium group-hover:text-blue-400 transition-colors duration-300">Scroll to explore</span>
-          <div className="p-3 border border-slate-600 rounded-full group-hover:border-blue-400 transition-all duration-300 animate-bounce">
+          <div className="p-3 border border-slate-600 rounded-full group-hover:border-blue-400 transition-all duration-300">
             <ArrowDown size={18} className="text-slate-400 group-hover:text-blue-400 transition-colors duration-300" />
           </div>
         </div>

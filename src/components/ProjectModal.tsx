@@ -54,9 +54,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-sm animate-fade-in" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 animate-modal-fade-in" onClick={onClose}>
       <div
-        className="bg-gradient-to-br from-gray-900 to-gray-800 border border-white/20 rounded-xl sm:rounded-2xl max-w-6xl w-full max-h-[98vh] sm:max-h-[95vh] overflow-hidden animate-scale-up"
+        className="bg-gradient-to-br from-gray-900 to-gray-800 border border-white/20 rounded-xl sm:rounded-2xl max-w-6xl w-full max-h-[98vh] sm:max-h-[95vh] overflow-hidden animate-modal-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -69,7 +69,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             {gallery.length > 0 && (
               <button
                 onClick={() => setIsGalleryMode(!isGalleryMode)}
-                className="p-1.5 sm:p-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-400/30 rounded-lg text-blue-300 hover:text-white hover:scale-105 active:scale-95 transition-all duration-200"
+                className="p-1.5 sm:p-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-400/30 rounded-lg text-blue-300 hover:text-white transition-all duration-200"
                 title={isGalleryMode ? "Exit Gallery" : "View Gallery"}
               >
                 <Grid3X3 size={16} className="sm:w-5 sm:h-5" />
@@ -77,7 +77,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             )}
             <button
               onClick={onClose}
-              className="p-1.5 sm:p-2 bg-gray-800/50 backdrop-blur-sm rounded-lg text-white hover:bg-gray-700 hover:scale-105 active:scale-95 transition-all duration-200"
+              className="p-1.5 sm:p-2 bg-gray-800/50 backdrop-blur-sm rounded-lg text-white hover:bg-gray-700 transition-all duration-200"
             >
               <X size={16} className="sm:w-5 sm:h-5" />
             </button>
@@ -116,7 +116,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                         <div className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10">
                           <button
                             onClick={prevImage}
-                            className="p-2 sm:p-3 bg-black/60 backdrop-blur-sm rounded-full text-white hover:bg-black/80 hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg"
+                            className="p-2 sm:p-3 bg-black/60 backdrop-blur-sm rounded-full text-white hover:bg-black/80 transition-all duration-200 shadow-lg"
                           >
                             <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
                           </button>
@@ -124,7 +124,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                         <div className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10">
                           <button
                             onClick={nextImage}
-                            className="p-2 sm:p-3 bg-black/60 backdrop-blur-sm rounded-full text-white hover:bg-black/80 hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg"
+                            className="p-2 sm:p-3 bg-black/60 backdrop-blur-sm rounded-full text-white hover:bg-black/80 transition-all duration-200 shadow-lg"
                           >
                             <ChevronRight size={20} className="sm:w-6 sm:h-6" />
                           </button>
@@ -165,9 +165,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                       <button
                         key={item.id}
                         onClick={() => { setIsGalleryMode(true); goToImage(index); }}
-                        className={`flex-shrink-0 w-12 h-9 sm:w-16 sm:h-12 rounded-md sm:rounded-lg overflow-hidden border-2 hover:scale-105 active:scale-95 transition-all duration-200 ${
+                        className={`flex-shrink-0 w-12 h-9 sm:w-16 sm:h-12 rounded-md sm:rounded-lg overflow-hidden border-2 transition-all duration-200 ${
                           index === currentImageIndex
-                            ? 'border-blue-400 scale-110'
+                            ? 'border-blue-400'
                             : 'border-white/30 hover:border-white/60'
                         }`}
                       >
@@ -238,7 +238,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white font-semibold hover:from-blue-500 hover:to-purple-500 hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base"
+                        className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white font-semibold hover:from-blue-500 hover:to-purple-500 transition-all duration-200 text-sm sm:text-base"
                       >
                         <ExternalLink size={14} className="sm:w-4 sm:h-4" />
                         Live Demo
@@ -255,7 +255,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 border-2 border-gray-600 rounded-lg text-gray-300 hover:border-gray-500 hover:text-white hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base"
+                        className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 border-2 border-gray-600 rounded-lg text-gray-300 hover:border-gray-500 hover:text-white transition-all duration-200 text-sm sm:text-base"
                       >
                         <Github size={14} className="sm:w-4 sm:h-4" />
                         Source Code
@@ -281,7 +281,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                   {gallery.map((item, index) => (
                     <div
                       key={item.id}
-                      className="bg-gray-800/50 rounded-lg overflow-hidden cursor-pointer border border-white/10 hover:scale-101 hover:ring-2 hover:ring-blue-400/40 transition-all duration-200 transform-gpu will-change-transform"
+                      className="bg-gray-800/50 rounded-lg overflow-hidden cursor-pointer border border-white/10 hover:ring-2 hover:ring-blue-400/40 transition-all duration-200"
                       onClick={() => {
                         setIsGalleryMode(true);
                         setCurrentImageIndex(index);
