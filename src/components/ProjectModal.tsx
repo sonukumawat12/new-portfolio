@@ -89,19 +89,21 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           {/* Main Content */}
           <div className="flex-1 flex flex-col min-h-0">
             {/* Image Section */}
-            <div className="flex-1 relative overflow-hidden min-h-[200px] sm:min-h-[300px]">
+            <div className="flex-1 relative overflow-hidden min-h-[200px] sm:min-h-[300px] flex items-center justify-center bg-gray-900/30">
               {isGalleryMode && gallery.length > 0 ? (
                 <div className="h-full relative">
                   {/* Main Image */}
-                  <div className="h-full relative">
-                    <OptimizedImage
-                      src={currentImage.image}
-                      alt={currentImage.title}
-                      className="w-full h-full object-contain"
-                      width={800}
-                      height={600}
-                      sizes="(max-width: 768px) 100vw, 800px"
-                    />
+                  <div className="h-full w-full flex items-center justify-center relative">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <OptimizedImage
+                        src={currentImage.image}
+                        alt={currentImage.title}
+                        className="max-w-full max-h-full object-contain"
+                        width={800}
+                        height={600}
+                        sizes="(max-width: 768px) 100vw, 800px"
+                      />
+                    </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                     
                     {/* Image Info Overlay */}
@@ -142,15 +144,17 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                   {/* moved below image */}
                 </div>
               ) : (
-                <div className="h-full relative">
-                  <OptimizedImage
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-contain"
-                    width={800}
-                    height={600}
-                    sizes="(max-width: 768px) 100vw, 800px"
-                  />
+                <div className="h-full w-full flex items-center justify-center relative">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <OptimizedImage
+                      src={project.image}
+                      alt={project.title}
+                      className="max-w-full max-h-full object-contain"
+                      width={800}
+                      height={600}
+                      sizes="(max-width: 768px) 100vw, 800px"
+                    />
+                  </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                 </div>
               )}
