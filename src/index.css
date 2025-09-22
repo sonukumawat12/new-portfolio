@@ -217,6 +217,23 @@ html {
   animation: modalSlideUp 0.3s ease-out;
 }
 
+/* Mobile nav item entrance */
+@keyframes navItemIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.nav-item-animate {
+  opacity: 0;
+  animation: navItemIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,

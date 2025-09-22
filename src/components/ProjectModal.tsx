@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ExternalLink, Github, ChevronLeft, ChevronRight, Grid3X3 } from 'lucide-react';
+import { X, ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 
 interface GalleryItem {
@@ -49,10 +49,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
     setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
   };
 
-  const goToImage = (index: number) => {
-    setCurrentImageIndex(index);
-  };
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 animate-modal-fade-in" onClick={onClose}>
       <div
@@ -66,15 +62,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             <p className="text-gray-400 text-xs sm:text-sm line-clamp-2 sm:line-clamp-1">{project.description}</p>
           </div>
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            {gallery.length > 0 && (
-              <button
-                onClick={() => setIsGalleryMode(!isGalleryMode)}
-                className="p-1.5 sm:p-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-400/30 rounded-lg text-blue-300 hover:text-white transition-all duration-200"
-                title={isGalleryMode ? "Exit Gallery" : "View Gallery"}
-              >
-                <Grid3X3 size={16} className="sm:w-5 sm:h-5" />
-              </button>
-            )}
             <button
               onClick={onClose}
               className="p-1.5 sm:p-2 bg-gray-800/50 backdrop-blur-sm rounded-lg text-white hover:bg-gray-700 transition-all duration-200"
@@ -105,34 +92,34 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                       />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                    
+
+                    {/* Navigation Arrows (gallery mode) */}
+                    {gallery.length > 1 && (
+                      <>
+                        <div className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20">
+                          <button
+                            onClick={prevImage}
+                            className="p-2 sm:p-3 bg-black/70 border border-white/10 backdrop-blur-sm rounded-full text-white hover:bg-black/80 transition-all duration-200 shadow-xl"
+                          >
+                            <ChevronLeft size={24} className="sm:w-7 sm:h-7" />
+                          </button>
+                        </div>
+                        <div className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20">
+                          <button
+                            onClick={nextImage}
+                            className="p-2 sm:p-3 bg-black/70 border border-white/10 backdrop-blur-sm rounded-full text-white hover:bg-black/80 transition-all duration-200 shadow-xl"
+                          >
+                            <ChevronRight size={24} className="sm:w-7 sm:h-7" />
+                          </button>
+                        </div>
+                      </>
+                    )}
+
                     {/* Image Info Overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-6 text-white">
                       <h4 className="text-base sm:text-xl font-bold mb-1 sm:mb-2">{currentImage.title}</h4>
                       <p className="text-gray-200 text-sm sm:text-base line-clamp-2">{currentImage.description}</p>
                     </div>
-
-                    {/* Navigation Arrows */}
-                    {gallery.length > 1 && (
-                      <>
-                        <div className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10">
-                          <button
-                            onClick={prevImage}
-                            className="p-2 sm:p-3 bg-black/60 backdrop-blur-sm rounded-full text-white hover:bg-black/80 transition-all duration-200 shadow-lg"
-                          >
-                            <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
-                          </button>
-                        </div>
-                        <div className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10">
-                          <button
-                            onClick={nextImage}
-                            className="p-2 sm:p-3 bg-black/60 backdrop-blur-sm rounded-full text-white hover:bg-black/80 transition-all duration-200 shadow-lg"
-                          >
-                            <ChevronRight size={20} className="sm:w-6 sm:h-6" />
-                          </button>
-                        </div>
-                      </>
-                    )}
 
                     {/* Image Counter */}
                     <div className="absolute top-2 sm:top-4 right-2 sm:right-4 px-2 sm:px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-white text-xs sm:text-sm">
@@ -147,8 +134,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 <div className="h-full w-full flex items-center justify-center relative">
                   <div className="w-full h-full flex items-center justify-center">
                     <OptimizedImage
-                      src={project.image}
-                      alt={project.title}
+                      src={gallery.length > 0 ? gallery[currentImageIndex].image : project.image}
+                      alt={gallery.length > 0 ? gallery[currentImageIndex].title : project.title}
                       className="max-w-full max-h-full object-contain"
                       width={800}
                       height={600}
@@ -156,6 +143,28 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                     />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+
+                  {/* Navigation Arrows (non-gallery mode) */}
+                  {gallery.length > 1 && (
+                    <>
+                      <div className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20">
+                        <button
+                          onClick={prevImage}
+                          className="p-2 sm:p-3 bg-black/70 border border-white/10 backdrop-blur-sm rounded-full text-white hover:bg-black/80 transition-all duration-200 shadow-xl"
+                        >
+                          <ChevronLeft size={24} className="sm:w-7 sm:h-7" />
+                        </button>
+                      </div>
+                      <div className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20">
+                        <button
+                          onClick={nextImage}
+                          className="p-2 sm:p-3 bg-black/70 border border-white/10 backdrop-blur-sm rounded-full text-white hover:bg-black/80 transition-all duration-200 shadow-xl"
+                        >
+                          <ChevronRight size={24} className="sm:w-7 sm:h-7" />
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -166,14 +175,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 <div className="flex gap-1 sm:gap-2 justify-center max-w-full overflow-hidden">
                   <div className="flex gap-1 sm:gap-2 overflow-x-auto scrollbar-hide px-1 sm:px-2 py-1">
                     {gallery.map((item, index) => (
-                      <button
+                      <div
                         key={item.id}
-                        onClick={() => { setIsGalleryMode(true); goToImage(index); }}
                         className={`flex-shrink-0 w-12 h-9 sm:w-16 sm:h-12 rounded-md sm:rounded-lg overflow-hidden border-2 transition-all duration-200 ${
                           index === currentImageIndex
                             ? 'border-blue-400'
-                            : 'border-white/30 hover:border-white/60'
+                            : 'border-white/30'
                         }`}
+                        aria-hidden="true"
                       >
                         <OptimizedImage
                           src={item.image}
@@ -183,7 +192,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                           height={48}
                           sizes="64px"
                         />
-                      </button>
+                      </div>
                     ))}
                   </div>
                 </div>

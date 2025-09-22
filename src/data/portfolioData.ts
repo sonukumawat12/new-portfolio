@@ -1,12 +1,18 @@
 import sonuImage from '../assets/sonu.jpg';
 import housejetImage from '../assets/project/housejet.png';
-import myclientwaveImage from '../assets/project/myclientwave.png';
 import clinicDashboard from '../assets/project/clinic/Dashboard.png';
 import clinicLogin from '../assets/project/clinic/login.png';
 import clinicPatientList from '../assets/project/clinic/Patientlist.png';
 import clinicPrescriptionDetails from '../assets/project/clinic/prescription_details.png';
 import clinicRole from '../assets/project/clinic/role.png';
 import clinicUsers from '../assets/project/clinic/users.png';
+
+// MyClientWave images
+import clientwaveDashboard from '../assets/project/clientwave/Dashboard.jpeg';
+import clientwaveCertificate from '../assets/project/clientwave/certificate of signature.png';
+import clientwaveConfig from '../assets/project/clientwave/config-signature-feilds.jpeg';
+import clientwaveDocIndex from '../assets/project/clientwave/doc-index.jpeg';
+import clientwaveLeadPage from '../assets/project/clientwave/lead-page.jpeg';
 
 export const portfolioData = {
   personal: {
@@ -151,43 +157,37 @@ export const portfolioData = {
       title: "MyClientWave - Lead Management System",
       description: "Advanced lead management with CRM integrations",
       longDescription: "A comprehensive lead management platform with role-based access control and seamless integrations with Zoho, Monday.com, and Salesforce CRM. Features include lead tracking, workflow automation, data synchronization, and advanced analytics dashboard.",
-      image: myclientwaveImage,
+      image: clientwaveDashboard,
       gallery: [
         {
           id: 1,
-          title: "Lead Dashboard",
-          description: "Centralized lead management dashboard",
-          image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=800"
+          title: "Main Dashboard",
+          description: "Centralized lead management dashboard with key metrics and analytics",
+          image: clientwaveDashboard
         },
         {
           id: 2,
-          title: "Lead Capture Forms",
-          description: "Customizable lead capture and qualification forms",
-          image: "https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800"
+          title: "Lead Management Page",
+          description: "Comprehensive lead tracking and management interface",
+          image: clientwaveLeadPage
         },
         {
           id: 3,
-          title: "CRM Integration",
-          description: "Seamless integration with Zoho, Monday.com, and Salesforce",
-          image: "https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=800"
+          title: "Document Index",
+          description: "Document management and indexing system",
+          image: clientwaveDocIndex
         },
         {
           id: 4,
-          title: "Workflow Automation",
-          description: "Automated lead processing and follow-up workflows",
-          image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=800"
+          title: "Signature Configuration",
+          description: "Digital signature field configuration and setup",
+          image: clientwaveConfig
         },
         {
           id: 5,
-          title: "Analytics & Reports",
-          description: "Advanced analytics and performance reporting",
-          image: "https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800"
-        },
-        {
-          id: 6,
-          title: "Team Management",
-          description: "Role-based access control and team collaboration",
-          image: "https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=800"
+          title: "Certificate Management",
+          description: "Digital certificate and signature verification system",
+          image: clientwaveCertificate
         }
       ],
       tech: ["Laravel", "Bootstrap", "MySQL", "API Integration"],
