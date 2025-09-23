@@ -6,6 +6,7 @@ import clinicPatientList from '../assets/project/clinic/Patientlist.png';
 import clinicPrescriptionDetails from '../assets/project/clinic/prescription_details.png';
 import clinicRole from '../assets/project/clinic/role.png';
 import clinicUsers from '../assets/project/clinic/users.png';
+import clinicThumb from '../assets/project/clinic/thum-clinic.jpg';
 
 // MyClientWave images
 import clientwaveDashboard from '../assets/project/clientwave/Dashboard.jpeg';
@@ -66,41 +67,22 @@ export const portfolioData = {
       { name: "React", level: 90, icon: "⚛️", color: "from-cyan-400 to-blue-500" },
       { name: "Vue.js", level: 88, icon: "💚", color: "from-green-400 to-emerald-500" },
       { name: "TypeScript", level: 85, icon: "🔷", color: "from-blue-400 to-indigo-500" },
-      { name: "JavaScript", level: 92, icon: "⚡", color: "from-yellow-400 to-orange-500" },
-      { name: "HTML5", level: 95, icon: "🌐", color: "from-orange-400 to-red-500" },
-      { name: "CSS3", level: 90, icon: "🎨", color: "from-pink-400 to-purple-500" },
       { name: "Tailwind CSS", level: 88, icon: "🎯", color: "from-teal-400 to-cyan-500" },
-      { name: "Vuetify", level: 85, icon: "💎", color: "from-purple-400 to-pink-500" },
     ],
     backend: [
-      { name: "PHP Laravel", level: 92, icon: "🐘", color: "from-red-400 to-pink-500" },
-      { name: "CakePHP", level: 85, icon: "🍰", color: "from-yellow-400 to-red-500" },
+      { name: "Laravel", level: 92, icon: "🐘", color: "from-red-400 to-pink-500" },
       { name: "Node.js", level: 82, icon: "🟢", color: "from-green-400 to-teal-500" },
-      { name: "Express.js", level: 80, icon: "🚀", color: "from-gray-400 to-gray-600" },
       { name: "REST APIs", level: 90, icon: "🔗", color: "from-blue-400 to-purple-500" },
-      { name: "GraphQL", level: 75, icon: "📊", color: "from-pink-400 to-purple-500" },
     ],
     database: [
       { name: "MySQL", level: 88, icon: "🐬", color: "from-blue-400 to-cyan-500" },
       { name: "MariaDB", level: 85, icon: "🍃", color: "from-green-400 to-blue-500" },
-      { name: "PostgreSQL", level: 78, icon: "🐘", color: "from-blue-400 to-indigo-500" },
-      { name: "MongoDB", level: 75, icon: "🍀", color: "from-green-400 to-emerald-500" },
     ],
     tools: [
       { name: "Git", level: 90, icon: "📚", color: "from-orange-400 to-red-500" },
-      { name: "Docker", level: 75, icon: "🐳", color: "from-blue-400 to-cyan-500" },
-      { name: "VS Code", level: 95, icon: "💻", color: "from-blue-400 to-purple-500" },
       { name: "Postman", level: 85, icon: "📮", color: "from-orange-400 to-pink-500" },
-      { name: "AWS", level: 70, icon: "☁️", color: "from-yellow-400 to-orange-500" },
+      { name: "Docker", level: 75, icon: "🐳", color: "from-blue-400 to-cyan-500" },
     ],
-    ai: [
-      { name: "ChatGPT", level: 90, icon: "🤖", color: "from-green-400 to-teal-500" },
-      { name: "Claude", level: 88, icon: "🧠", color: "from-purple-400 to-indigo-500" },
-      { name: "GitHub Copilot", level: 85, icon: "👨‍💻", color: "from-gray-400 to-blue-500" },
-      { name: "Cursor AI", level: 82, icon: "✨", color: "from-cyan-400 to-purple-500" },
-      { name: "Windsurf", level: 80, icon: "🏄‍♂️", color: "from-blue-400 to-pink-500" },
-      { name: "Gemini", level: 78, icon: "💎", color: "from-yellow-400 to-red-500" },
-    ]
   },
 
   projects: [
@@ -199,7 +181,7 @@ export const portfolioData = {
       title: "Clinic Management CRM",
       description: "Healthcare management system for clinics and hospitals",
       longDescription: "A specialized CRM system designed for healthcare facilities. Features include patient management, appointment scheduling, medical records, billing management, inventory tracking, and comprehensive reporting for healthcare providers.",
-      image: "https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: clinicThumb,
       gallery: [
         {
           id: 1,

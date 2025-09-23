@@ -117,8 +117,7 @@ const OptimizedImage = ({
   return (
     <div 
       ref={placeholderRef}
-      className={`relative overflow-hidden ${className}`}
-      style={{ width, height }}
+      className={"relative overflow-hidden w-full h-full"}
     >
       {/* Placeholder/Loading state */}
       {!isLoaded && (
@@ -161,7 +160,7 @@ const OptimizedImage = ({
             onLoad={handleLoad}
             onError={handleError}
             className={`
-              w-full h-full object-cover transition-opacity duration-300
+              w-full h-full object-contain transition-opacity duration-300
               ${isLoaded ? 'opacity-100' : 'opacity-0'}
               ${className}
             `}

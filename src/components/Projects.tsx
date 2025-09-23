@@ -1,5 +1,6 @@
 import { useState, memo, useCallback, useMemo, Suspense, lazy } from 'react';
-import { ExternalLink, Github, FolderOpen } from 'lucide-react';
+import { FolderOpen } from 'lucide-react';
+
 import { portfolioData } from '../data/portfolioData';
 import OptimizedImage from './OptimizedImage';
 import { useScrollAnimation } from '../hooks/useIntersectionObserver';
@@ -27,15 +28,11 @@ interface Project {
 const ProjectCard = memo(({ project, onClick, index }: { project: Project; onClick: () => void; index: number }) => {
   const { elementRef } = useScrollAnimation();
   
-  const handleLiveClick = useCallback((e: React.MouseEvent) => {
+  // Overlay "View" button simply opens the modal (same as clicking the card)
+  const handleViewClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    window.open(project.liveUrl, '_blank');
-  }, [project.liveUrl]);
-
-  const handleGithubClick = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    window.open(project.githubUrl, '_blank');
-  }, [project.githubUrl]);
+    onClick();
+  }, [onClick]);
   
   return (
     <div
@@ -59,18 +56,13 @@ const ProjectCard = memo(({ project, onClick, index }: { project: Project; onCli
         <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="text-center space-y-3 sm:space-y-4 px-4">
             <p className="text-white font-semibold text-sm sm:text-base">Click to view details</p>
-            <div className="flex gap-3 sm:gap-4 justify-center">
+            <div className="flex justify-center">
               <button
-                onClick={handleLiveClick}
-                className="p-2 sm:p-3 bg-blue-600 rounded-full text-white hover:bg-blue-500 transition-all duration-200 hover:scale-110"
+                onClick={handleViewClick}
+                className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-blue-600 rounded-full text-white font-medium hover:bg-blue-500 transition-all duration-200 hover:scale-105"
               >
-                <ExternalLink size={16} className="sm:w-5 sm:h-5" />
-              </button>
-              <button
-                className="p-2 sm:p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 hover:scale-105 transition-all duration-200"
-                onClick={handleGithubClick}
-              >
-                <Github size={16} className="sm:w-5 sm:h-5" />
+                <FolderOpen size={16} className="sm:w-5 sm:h-5" />
+                <span className="text-sm sm:text-base">View</span>
               </button>
             </div>
           </div>

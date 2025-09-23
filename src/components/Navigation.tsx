@@ -27,6 +27,7 @@ const Navigation = memo(() => {
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
     { name: 'Experience', href: '#experience' },
+    { name: 'Education', href: '#education' },
     { name: 'Certifications', href: '#certifications' },
     { name: 'Contact', href: '#contact' },
   ], []);
@@ -34,7 +35,7 @@ const Navigation = memo(() => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-gray-950/90 backdrop-blur-xl md:border-b md:border-white/10 md:shadow-xl' 
+          ? 'bg-gray-950/90 backdrop-blur-xl md:shadow-xl' 
           : 'bg-transparent'
       }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

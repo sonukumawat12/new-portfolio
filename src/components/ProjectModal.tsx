@@ -285,39 +285,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             </div>
           </div>
 
-          {/* Gallery Sidebar (hidden on mobile, shown on large screens when not in gallery mode) */}
-          {!isGalleryMode && gallery.length > 0 && (
-            <div className="hidden lg:block w-80 border-l border-white/10 bg-gray-900/50 overflow-x-hidden">
-              <div className="p-4">
-                <h4 className="text-lg font-semibold text-white mb-4">Project Gallery</h4>
-                <div className="space-y-3 max-h-[calc(95vh-200px)] overflow-y-auto overflow-x-hidden">
-                  {gallery.map((item, index) => (
-                    <div
-                      key={item.id}
-                      className="bg-gray-800/50 rounded-lg overflow-hidden cursor-pointer border border-white/10 hover:ring-2 hover:ring-blue-400/40 transition-all duration-200"
-                      onClick={() => {
-                        setIsGalleryMode(true);
-                        setCurrentImageIndex(index);
-                      }}
-                    >
-                      <OptimizedImage
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-24 object-cover"
-                        width={320}
-                        height={96}
-                        sizes="320px"
-                      />
-                      <div className="p-3">
-                        <h5 className="text-white font-medium text-sm mb-1">{item.title}</h5>
-                        <p className="text-gray-400 text-xs line-clamp-2">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

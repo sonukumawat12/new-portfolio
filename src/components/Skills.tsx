@@ -1,4 +1,4 @@
-import { Database, Server, Wrench, Monitor, Layers, Bot } from 'lucide-react';
+import { Database, Server, Wrench, Monitor, Layers } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 interface Skill {
@@ -82,12 +82,6 @@ const Skills = () => {
       icon: Wrench,
       color: "from-orange-400 to-red-500"
     },
-    {
-      title: "AI",
-      skills: skills.ai,
-      icon: Bot,
-      color: "from-green-400 to-teal-500"
-    }
   ];
 
   return (
