@@ -1,16 +1,14 @@
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect } from 'react';
 import Navigation from './components/Navigation';
-
-// Lazy load components for better performance
-const Hero = lazy(() => import('./components/Hero'));
-const About = lazy(() => import('./components/About'));
-const Skills = lazy(() => import('./components/Skills'));
-const Projects = lazy(() => import('./components/Projects'));
-const Experience = lazy(() => import('./components/Experience'));
-const Education = lazy(() => import('./components/Education'));
-const Certifications = lazy(() => import('./components/Certifications'));
-const Contact = lazy(() => import('./components/Contact'));
-const Footer = lazy(() => import('./components/Footer'));
+import Hero from './components/Hero';
+import About from './components/About';
+import Skills from './components/Skills';
+import Projects from './components/Projects';
+import Experience from './components/Experience';
+import Education from './components/Education';
+import Certifications from './components/Certifications';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -41,17 +39,15 @@ function App() {
       <Navigation />
       
       <main className="relative">
-        <Suspense fallback={null}>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Experience />
-          <Education />
-          <Certifications />
-          <Contact />
-          <Footer />
-        </Suspense>
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Education />
+        <Certifications />
+        <Contact />
+        <Footer />
       </main>
     </div>
   );

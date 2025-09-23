@@ -36,6 +36,12 @@ html {
   backface-visibility: hidden;
 }
 
+/* High-FPS: avoid painting off-screen sections until needed */
+main > section:not(#home) {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}
+
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
