@@ -1,6 +1,5 @@
 import { useEffect, lazy, Suspense } from 'react';
 import Navigation from './components/Navigation';
-import LoadingSpinner from './components/LoadingSpinner';
 
 // Lazy load components for better performance
 const Hero = lazy(() => import('./components/Hero'));
@@ -42,7 +41,7 @@ function App() {
       <Navigation />
       
       <main className="relative">
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={null}>
           <Hero />
           <About />
           <Skills />

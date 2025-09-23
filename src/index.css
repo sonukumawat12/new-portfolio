@@ -217,6 +217,31 @@ html {
   animation: modalSlideUp 0.3s ease-out;
 }
 
+/* Animated dots background (lightweight) */
+@keyframes dotsMove {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 400px 200px, -300px -150px; }
+}
+
+.animated-dots {
+  /* two layers for subtle parallax */
+  background-image: 
+    radial-gradient(circle, rgba(148,163,184,0.12) 1px, transparent 1px),
+    radial-gradient(circle, rgba(59,130,246,0.10) 1px, transparent 1px);
+  background-size: 22px 22px, 28px 28px;
+  background-position: 0 0, 0 0;
+  animation: dotsMove 40s linear infinite;
+  opacity: 0.35;
+  mask-image: radial-gradient(circle at 50% 40%, rgba(0,0,0,0.9), rgba(0,0,0,0.4) 40%, transparent 70%);
+}
+
+.animated-dots-stronger {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+  animation: dotsMove 55s linear infinite;
+  opacity: 0.15;
+}
+
 /* Mobile nav item entrance */
 @keyframes navItemIn {
   from {

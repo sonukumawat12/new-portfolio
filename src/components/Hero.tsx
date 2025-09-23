@@ -1,5 +1,5 @@
 import { ArrowDown, MessageCircle } from 'lucide-react';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { portfolioData } from '../data/portfolioData';
 import OptimizedImage from './OptimizedImage';
 
@@ -23,6 +23,11 @@ const Hero = memo(() => {
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-gray-950 to-slate-900"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(59,130,246,0.08),transparent_50%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,rgba(20,184,166,0.06),transparent_50%)]"></div>
+      {/* Moving dots parallax */}
+      <div className="absolute inset-0 animated-dots"></div>
+      <div className="absolute inset-0 animated-dots-stronger"></div>
+      {/* Canvas particles (lightweight) */}
+      <CanvasDots />
       
       {/* Subtle geometric elements */}
       <div className="absolute inset-0 overflow-hidden opacity-30">
@@ -118,5 +123,97 @@ const Hero = memo(() => {
 });
 
 Hero.displayName = 'Hero';
+
+// Lightweight canvas dots background
+const CanvasDots = memo(() => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    let width = 0;
+    let height = 0;
+    let particles: { x: number; y: number; vx: number; vy: number; r: number; o: number }[] = [];
+
+    const random = (min: number, max: number) => Math.random() * (max - min) + min;
+
+    const resize = () => {
+      width = canvas.clientWidth;
+      height = canvas.clientHeight;
+      canvas.width = Math.floor(width * DPR);
+      canvas.height = Math.floor(height * DPR);
+      ctx.scale(DPR, DPR);
+      // Recreate particles on resize for consistent density
+      const area = width * height;
+      const density = area > 1_000_000 ? 70 : area > 600_000 ? 50 : 30; // responsive count
+      const count = density;
+      particles = Array.from({ length: count }, () => ({
+        x: random(0, width),
+        y: random(0, height),
+        vx: random(-0.12, 0.12),
+        vy: random(-0.10, 0.10),
+        r: random(0.8, 2.2),
+        o: random(0.15, 0.5),
+      }));
+    };
+
+    const step = () => {
+      ctx.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        // wrap around edges for seamless motion
+        if (p.x < -5) p.x = width + 5;
+        if (p.x > width + 5) p.x = -5;
+        if (p.y < -5) p.y = height + 5;
+        if (p.y > height + 5) p.y = -5;
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${p.o})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      rafRef.current = requestAnimationFrame(step);
+    };
+
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+
+    if (!prefersReduced) {
+      rafRef.current = requestAnimationFrame(step);
+    } else {
+      // Draw static dots when reduced motion
+      ctx.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${p.o})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    return () => {
+      ro.disconnect();
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      aria-hidden="true"
+    />
+  );
+});
 
 export default Hero;
