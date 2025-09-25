@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import { MapPin, TrendingUp, Building2, Calendar } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
 interface Experience {
   id: number;
@@ -13,17 +12,9 @@ interface Experience {
 }
 
 const ExperienceCard = memo(({ experience }: { experience: Experience }) => {
-  const { elementRef, isIntersecting } = useIntersectionObserver({
-    threshold: 0.2,
-    rootMargin: '50px',
-  });
-
   return (
     <div 
-      ref={elementRef}
-      className={`flex items-start gap-3 sm:gap-4 mb-6 sm:mb-8 transition-all duration-500 ${
-        isIntersecting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}
+      className={`flex items-start gap-3 sm:gap-4 mb-6 sm:mb-8 animate-fade-in-up`}
     >
       {/* Timeline Node */}
       <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg mt-1">
@@ -55,7 +46,7 @@ const Experience = memo(() => {
   const { experience } = portfolioData;
 
   return (
-    <section id="experience" className="py-12 sm:py-16 lg:py-20 relative">
+    <section id="experience" className="py-12 sm:py-16 lg:py-20 relative animate-fade-in-up">
       {/* Simplified Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-950 to-gray-900"></div>
       

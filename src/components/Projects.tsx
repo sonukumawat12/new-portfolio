@@ -3,7 +3,6 @@ import { FolderOpen } from 'lucide-react';
 
 import { portfolioData } from '../data/portfolioData';
 import OptimizedImage from './OptimizedImage';
-import { useScrollAnimation } from '../hooks/useIntersectionObserver';
 
 // Lazy load the heavy ProjectModal component
 const ProjectModal = lazy(() => import('./ProjectModal'));
@@ -26,7 +25,6 @@ interface Project {
 }
 
 const ProjectCard = memo(({ project, onClick, index }: { project: Project; onClick: () => void; index: number }) => {
-  const { elementRef } = useScrollAnimation();
   
   // Overlay "View" button simply opens the modal (same as clicking the card)
   const handleViewClick = useCallback((e: React.MouseEvent) => {
@@ -36,8 +34,8 @@ const ProjectCard = memo(({ project, onClick, index }: { project: Project; onCli
   
   return (
     <div
-      ref={elementRef}
-      className={`group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden cursor-pointer hover-lift fade-in-on-scroll stagger-${Math.min(index + 1, 4)}`}
+      className={`group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden cursor-pointer hover-lift animate-fade-in-up`}
+      style={{ animationDelay: `${Math.min(index, 3) * 100}ms` }}
       onClick={onClick}
     >
       <div className="relative overflow-hidden">

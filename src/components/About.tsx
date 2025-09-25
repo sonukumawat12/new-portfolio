@@ -1,53 +1,33 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { User, Heart, Code, Award } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 const CounterAnimation = ({ end, suffix = '', duration = 1   }: { end: number; suffix?: string; duration?: number }) => {
   const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const counterRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
+    let startTime: number;
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
 
-    if (counterRef.current) {
-      observer.observe(counterRef.current);
-    }
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * end));
 
-    return () => observer.disconnect();
-  }, []);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
 
-  useEffect(() => {
-    if (isVisible) {
-      let startTime: number;
-      const animate = (currentTime: number) => {
-        if (!startTime) startTime = currentTime;
-        const progress = Math.min((currentTime - startTime) / duration, 1);
-        
-        // Easing function for smooth animation
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        setCount(Math.floor(easeOutQuart * end));
-        
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else {
-          setCount(end);
-        }
-      };
-      
-      requestAnimationFrame(animate);
-    }
-  }, [isVisible, end, duration]);
+    const rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
+  }, [end, duration]);
 
   return (
-    <div ref={counterRef} className="text-center will-change-transform">
+    <div className="text-center will-change-transform">
       <div className="text-4xl font-bold text-white mb-2">
         {count}{suffix}
       </div>

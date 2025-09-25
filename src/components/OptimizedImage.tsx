@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 interface OptimizedImageProps {
   src: string;
@@ -6,7 +6,6 @@ interface OptimizedImageProps {
   className?: string;
   width?: number;
   height?: number;
-  priority?: boolean;
   sizes?: string;
   placeholder?: string;
   onLoad?: () => void;
@@ -19,43 +18,17 @@ const OptimizedImage = ({
   className = '',
   width,
   height,
-  priority = false,
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
   placeholder,
   onLoad,
   onError
 }: OptimizedImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(priority);
+  const [isInView] = useState(true);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
-  const placeholderRef = useRef<HTMLDivElement>(null);
 
-  // Intersection Observer for lazy loading
-  useEffect(() => {
-    if (priority) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsInView(true);
-            observer.disconnect();
-          }
-        });
-      },
-      {
-        rootMargin: '50px',
-        threshold: 0.1,
-      }
-    );
-
-    if (placeholderRef.current) {
-      observer.observe(placeholderRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [priority]);
+  // No IntersectionObserver: render immediately
 
   // Generate WebP and fallback sources
   const getOptimizedSrc = (originalSrc: string, format: 'webp' | 'original' = 'original') => {
@@ -116,7 +89,6 @@ const OptimizedImage = ({
 
   return (
     <div 
-      ref={placeholderRef}
       className={"relative overflow-hidden w-full h-full"}
     >
       {/* Placeholder/Loading state */}
@@ -155,7 +127,7 @@ const OptimizedImage = ({
             alt={alt}
             width={width}
             height={height}
-            loading={priority ? 'eager' : 'lazy'}
+            loading={'eager'}
             decoding="async"
             onLoad={handleLoad}
             onError={handleError}

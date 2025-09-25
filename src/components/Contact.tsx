@@ -1,7 +1,6 @@
 import { useState, memo, useCallback } from 'react';
 import { Send, MapPin, Phone, Mail, Github, Linkedin, Twitter, MessageSquare, CheckCircle, AlertCircle, Zap } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
 const SocialIcon = memo(({ name, icon }: { name: string; icon: string }) => {
   const iconMap: { [key: string]: any } = {
@@ -27,10 +26,6 @@ const SocialIcon = memo(({ name, icon }: { name: string; icon: string }) => {
 
 const Contact = memo(() => {
   const { personal } = portfolioData;
-  const { elementRef, isIntersecting } = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: '50px',
-  });
   
   const [formData, setFormData] = useState({
     name: '',
@@ -178,11 +173,8 @@ const Contact = memo(() => {
 
   return (
     <section 
-      ref={elementRef}
       id="contact" 
-      className={`py-12 sm:py-16 lg:py-20 relative transition-all duration-700 ${
-        isIntersecting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
+      className="py-12 sm:py-16 lg:py-20 relative animate-fade-in-up"
     >
       {/* Simplified background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-950 to-gray-900"></div>
