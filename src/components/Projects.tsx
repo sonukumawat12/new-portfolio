@@ -24,7 +24,7 @@ interface Project {
   githubUrl: string;
 }
 
-const ProjectCard = memo(({ project, onClick, index }: { project: Project; onClick: () => void; index: number }) => {
+const ProjectCard = memo(({ project, onClick }: { project: Project; onClick: () => void }) => {
   
   // Overlay "View" button simply opens the modal (same as clicking the card)
   const handleViewClick = useCallback((e: React.MouseEvent) => {
@@ -34,18 +34,16 @@ const ProjectCard = memo(({ project, onClick, index }: { project: Project; onCli
   
   return (
     <div
-      className={`group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden cursor-pointer hover-lift animate-fade-in-up`}
-      style={{ animationDelay: `${Math.min(index, 3) * 100}ms` }}
+      className="group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden cursor-pointer"
       onClick={onClick}
     >
       <div className="relative overflow-hidden">
         <OptimizedImage
           src={project.image}
           alt={project.title}
-          className="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-48 sm:h-56 md:h-64 object-cover"
           width={600}
           height={256}
-          priority={false}
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
@@ -134,11 +132,10 @@ const Projects = memo(() => {
 
           {/* Optimized Projects Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-            {memoizedProjects.map((project, index) => (
+            {memoizedProjects.map((project) => (
               <ProjectCard
                 key={project.id}
                 project={project}
-                index={index}
                 onClick={() => handleProjectSelect(project)}
               />
             ))}

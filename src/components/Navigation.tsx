@@ -1,25 +1,8 @@
-import { useState, useCallback, memo, useMemo, useEffect } from 'react';
+import { useState, memo, useMemo } from 'react';
 import { Menu, X, Sparkles } from 'lucide-react';
-import { useThrottledScroll } from '../hooks/useScrollAnimation';
 
 const Navigation = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  const handleScroll = useCallback((scrollY: number) => {
-    setScrolled(scrollY > 50);
-  }, []);
-
-  useThrottledScroll(handleScroll);
-
-  // Lock background scroll when mobile menu is open
-  useEffect(() => {
-    if (isOpen) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => { document.body.style.overflow = prev; };
-    }
-  }, [isOpen]);
 
   const navItems = useMemo(() => [
     { name: 'Home', href: '#home' },
@@ -31,11 +14,7 @@ const Navigation = memo(() => {
   ], []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-gray-950/90 backdrop-blur-xl md:shadow-xl' 
-          : 'bg-transparent'
-      }`}>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-xl md:shadow-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-6 relative z-50">
           <div className="flex items-center gap-2 text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
